@@ -35,7 +35,7 @@ public class ReplyServiceImpl implements ReplyService {
     }
     private final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
-    public Reply replySave(Long pno, ReplyDto.ReplyRequestDto replyRequestDto){
+    public ReplyDto.ReplyResult replySave(Long pno, ReplyDto.ReplyRequestDto replyRequestDto){
         LOGGER.info("[replySave] 댓글 작성 시도");
         User user = userRepository.getByEmail(replyRequestDto.getWriter());
         Post post = postRepository.getByPno(pno);
@@ -44,8 +44,12 @@ public class ReplyServiceImpl implements ReplyService {
                 .content(replyRequestDto.getContent())
                 .post(post)
                 .build();
-        replyRepository.save(reply).getRno();
-        return reply;
+        replyRepository.save(reply);
+        ReplyDto.ReplyResult result = ReplyDto.ReplyResult.builder()
+                .content(reply.getContent())
+                .writer(reply.getWriter().getNickname())
+                .build();
+        return result;
     }
     public Boolean replyModify(Long rno, ReplyDto.ReplyModifyDto replyModifyDto){
         LOGGER.info("[replyModify] 댓글 수정 시도");
