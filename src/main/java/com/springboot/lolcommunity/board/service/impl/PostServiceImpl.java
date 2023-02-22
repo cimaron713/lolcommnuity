@@ -90,7 +90,7 @@ public class PostServiceImpl implements PostService {
     }
 
     public List<PostDto.PostListDto> postList(){
-        List<Post> posts = postRepository.findAll(Sort.by(Sort.Direction.DESC, "pno"));;
+        List<Post> posts = postRepository.findAll(Sort.by(Sort.Direction.DESC, "pno"));
         List<PostDto.PostListDto> postList = new ArrayList<>();
         for(Post post : posts){
             PostDto.PostListDto postListDto = PostDto.PostListDto.builder()

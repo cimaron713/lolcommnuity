@@ -25,7 +25,7 @@ public class PostController {
     }
 
     @GetMapping(value = "/")
-    public List<PostDto.PostListDto> postList() throws Exception{
+    public List<PostDto.PostListDto> postList(){
         LOGGER.info("[postList] 게시글 목록 조회");
         List<PostDto.PostListDto> postList = postService.postList();
         LOGGER.info("[postList] 게시글 목록 조회 완료");

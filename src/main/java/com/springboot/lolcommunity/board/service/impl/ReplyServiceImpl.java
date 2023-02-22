@@ -12,11 +12,11 @@ import com.springboot.lolcommunity.user.service.impl.UserServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Transactional
@@ -80,7 +80,7 @@ public class ReplyServiceImpl implements ReplyService {
     }
     public List<ReplyDto.ReplyListDto> replyList(){
         LOGGER.info("[replyList] 댓글 정보 조회");
-        List<Reply> replies = replyRepository.findAll();
+        List<Reply> replies = replyRepository.findAll(Sort.by(Sort.Direction.DESC, "pno"));
         List<ReplyDto.ReplyListDto> replyList = new ArrayList<>();
         for(Reply reply : replies){
             ReplyDto.ReplyListDto replyListDto = ReplyDto.ReplyListDto.builder()
@@ -91,7 +91,6 @@ public class ReplyServiceImpl implements ReplyService {
                     .build();
             replyList.add(replyListDto);
         }
-        Collections.reverse(replyList);
         return replyList;
     }
 }
